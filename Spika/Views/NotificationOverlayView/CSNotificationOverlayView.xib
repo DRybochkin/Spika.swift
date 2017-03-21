@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CSNotificationOverlayView" customModule="Spika" customModuleProvider="target">
+            <connections>
+                <outlet property="contentButton" destination="AU1-Dx-3tj" id="WTR-6a-pJk"/>
+                <outlet property="contentView" destination="icc-bp-sqa" id="W5Q-kX-CRd"/>
+                <outlet property="iconImageView" destination="zS3-ZJ-fwI" id="VTg-d9-zbe"/>
+                <outlet property="messageLabel" destination="dPW-yg-xdC" id="jrb-Yx-aMp"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="icc-bp-sqa">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AU1-Dx-3tj" userLabel="Button - Content">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                    <color key="backgroundColor" red="0.82568621635437012" green="0.82566148042678833" blue="0.82567554712295532" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="onContent:" destination="-1" eventType="touchUpInside" id="XaD-3c-9Nw"/>
+                        <action selector="onContentCancel:" destination="-1" eventType="touchCancel" id="NgK-l4-hMI"/>
+                        <action selector="onContentCancel:" destination="-1" eventType="touchDragExit" id="QaX-vN-I0x"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_sent" translatesAutoresizingMaskIntoConstraints="NO" id="zS3-ZJ-fwI">
+                    <rect key="frame" x="20" y="28" width="13" height="13"/>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPW-yg-xdC" userLabel="Label - Message">
+                    <rect key="frame" x="139" y="13" width="42" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="muE-Ms-ZLU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="AU1-Dx-3tj" firstAttribute="top" secondItem="icc-bp-sqa" secondAttribute="top" id="5J8-KM-DJh"/>
+                <constraint firstAttribute="centerY" secondItem="dPW-yg-xdC" secondAttribute="centerY" id="CBT-b2-JTI"/>
+                <constraint firstItem="AU1-Dx-3tj" firstAttribute="leading" secondItem="icc-bp-sqa" secondAttribute="leading" id="Ivt-zo-1l8"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dPW-yg-xdC" secondAttribute="trailing" constant="8" id="OCe-D0-Xqv"/>
+                <constraint firstAttribute="trailing" secondItem="AU1-Dx-3tj" secondAttribute="trailing" id="Vrz-bg-hsW"/>
+                <constraint firstAttribute="bottom" secondItem="AU1-Dx-3tj" secondAttribute="bottom" id="W7v-En-ISW"/>
+                <constraint firstItem="dPW-yg-xdC" firstAttribute="centerX" secondItem="icc-bp-sqa" secondAttribute="centerX" id="eRR-aR-F3m"/>
+                <constraint firstItem="zS3-ZJ-fwI" firstAttribute="leading" secondItem="icc-bp-sqa" secondAttribute="leading" constant="20" id="jqe-ZE-ABJ"/>
+                <constraint firstItem="zS3-ZJ-fwI" firstAttribute="centerY" secondItem="icc-bp-sqa" secondAttribute="centerY" id="r5G-7o-xgM"/>
+                <constraint firstItem="dPW-yg-xdC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zS3-ZJ-fwI" secondAttribute="trailing" constant="8" id="zy1-e6-P92"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_sent" width="13" height="13"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>

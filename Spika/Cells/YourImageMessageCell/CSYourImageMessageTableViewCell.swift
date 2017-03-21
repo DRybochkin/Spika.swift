@@ -1,52 +1,46 @@
 //
-//  CSMyStickerMessageCell.swift
-//  Spika
+//  YourImageMessageTableViewCell.h
+//  Prototype
 //
 //  Created by Dmitry Rybochkin on 25.02.17.
 //  Copyright (c) 2015 Clover Studio. All rights reserved.
 //
 
 import UIKit
-import SDWebImage
 
-class CSMyStickerMessageCell: CSBaseTableViewCell {
-    @IBOutlet weak var backView: UIView!
+class CSYourImageMessageTableViewCell: CSBaseTableViewCell {
     @IBOutlet weak var localImage: UIImageView!
-    @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var avatar: CSAvatarView!
+    @IBOutlet weak var parentView: UIView!
+    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var peak: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    //@IBOutlet weak var nameConstraint: NSLayoutConstraint!
     @IBOutlet weak var dateLabel: UILabel!
-
+    //@IBOutlet weak var dateConstraint: NSLayoutConstraint!
+    
     override var message: CSMessageModel! {
         didSet {
             backView.layer.cornerRadius = 8
             backView.layer.masksToBounds = true
-            backView.backgroundColor = kAppBubbleRightColor
+            backView.backgroundColor = kAppBubbleLeftColor
             loadingIndicator.startAnimating()
             manageLoadingIndicator(toShow: false)
             let dateCreated: String = message.created.toString(format: "H:mm")
-            var messageStatus: String
-            if (message.seenBy != nil && message.seenBy.count > 0) {
-                messageStatus = "Seen"
-                timeLabel.text = String(format: "%@, %@", messageStatus, dateCreated)
-            } else if (message.messageStatus == KAppMessageStatus.Sent) {
-                messageStatus = "Sending..."
-                timeLabel.text = messageStatus
-            } else {
-                messageStatus = "Sent"
-                timeLabel.text = String(format: "%@, %@", messageStatus, dateCreated)
-            }
-            
+            timeLabel.text = dateCreated
             timeLabel.textColor = kAppMessageFontColor
             localImage.layer.cornerRadius = 8
             localImage.layer.masksToBounds = true
-            localImage.sd_setImage(with: URL(string: message.message))
+            if (message.file.thumb != nil) {
+                localImage.sd_setImage(with: URL(string: CSUtils.generateDownloadURLFormFileId(message.file.thumb.id)))
+            } else if (message.file.file != nil) {
+                localImage.sd_setImage(with: URL(string: CSUtils.generateDownloadURLFormFileId(message.file.file.id)))
+            }
             if (isShouldShowAvatar) {
                 avatar.isHidden = false
-                if (message.user != nil && message.user.avatarURL != nil && message.user.avatarURL != "") {
+                if (message.user.avatarURL != nil && message.user.avatarURL != "") {
                     avatar.setImageWith(URL(string: (message.user.avatarURL)!)!)
                 }
                 peak.isHidden = false
@@ -55,18 +49,22 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
                 peak.isHidden = true
             }
             if (isShouldShowName) {
-                nameLabel.text = message.user?.name
+                nameLabel.text = message.user.name
+                //nameConstraint.constant = 20.0
             } else {
                 nameLabel.text = ""
+                //nameConstraint.constant = 0.0
             }
             if (isShouldShowDate) {
-                dateLabel.text = message.created.toString(format: "d MMMM yyyy ")
+                dateLabel.text = message.created.toString(format: " d MMMM yyyy ")
+                //dateConstraint.constant = 20.0
             } else {
                 dateLabel.text = ""
+                //dateConstraint.constant = 0.0
             }
         }
     }
-    
+
     func manageLoadingIndicator(toShow: Bool) {
         if (toShow) {
             loadingIndicator.startAnimating()
@@ -76,6 +74,7 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
             loadingIndicator.isHidden = true
         }
     }
+
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -90,30 +89,10 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
         if (sender.state == .began) {
             sender.view?.becomeFirstResponder()
             let menuController = UIMenuController.shared
-            let it1 = UIMenuItem(title: "Details", action: #selector(handleDetails(_:)))
-            let it2 = UIMenuItem(title: "Delete", action: #selector(handleDelete(_:)))
-            menuController.menuItems = [it1, it2]
-            menuController.setTargetRect(localImage.frame, in: localImage as UIView)
+            let it1 = UIMenuItem(title: "Details", action: #selector(handleDetails))
+            menuController.menuItems = [it1]
+            menuController.setTargetRect(localImage.frame, in: localImage)
             menuController.setMenuVisible(true, animated: true)
         }
-    }
-
-    func handleDelete(_ sender: Any) {
-        if (delegate != nil && delegate?.onDeleteClicked != nil) {
-            delegate?.onDeleteClicked(message)
-        }
-    }
-    
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if (message.deleted != nil) {
-            return false
-        }
-        if (action == #selector(handleDetails(_:))) {
-            return true
-        } else if (action == #selector(handleDelete(_:))) {
-            return true
-        }
-
-        return false
     }
 }

@@ -1,32 +1,70 @@
 //
-//  CSMyStickerMessageCell.swift
-//  Spika
+//  MyMediaMessageTableViewCell.h
+//  Prototype
 //
 //  Created by Dmitry Rybochkin on 25.02.17.
 //  Copyright (c) 2015 Clover Studio. All rights reserved.
 //
 
 import UIKit
-import SDWebImage
 
-class CSMyStickerMessageCell: CSBaseTableViewCell {
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var localImage: UIImageView!
+class CSMyMediaMessageTableViewCell: CSBaseTableViewCell {
     @IBOutlet weak var parentView: UIView!
+    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var labelImage: UIImageView!
+    @IBOutlet weak var nameOfFile: UILabel!
+    @IBOutlet weak var size: UILabel!
+    @IBOutlet weak var download: UILabel!
     @IBOutlet weak var avatar: CSAvatarView!
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var peak: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameConstraint: NSLayoutConstraint!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dateConstraint: NSLayoutConstraint!
 
     override var message: CSMessageModel! {
         didSet {
             backView.layer.cornerRadius = 8
             backView.layer.masksToBounds = true
             backView.backgroundColor = kAppBubbleRightColor
-            loadingIndicator.startAnimating()
-            manageLoadingIndicator(toShow: false)
+            if (message.messageType == KAppMessageType.Location) {
+                nameOfFile.text = message.message
+                size.text = "Show location on map."
+                download.text = ""
+            } else if (message.messageType == KAppMessageType.Contact) {
+                let subStrings: [String]! = message.message.components(separatedBy: CharacterSet(charactersIn: "\n"))
+                for subString: String in subStrings {
+                    if subString.hasPrefix("FN") {
+                        nameOfFile.text = subString.substring(from: subString.index(subString.startIndex, offsetBy: 3))
+                    }
+                }
+                size.text = ""
+                download.text = ""
+            } else {
+                nameOfFile.text = message.file.file.name
+                size.text = CSUtils.readableFileSize(message.file.file.size)
+                download.text = "Download"
+            }
+            
+            nameOfFile.numberOfLines = 1
+            nameOfFile.textColor = UIColor.white
+            size.numberOfLines = 1
+            size.textColor = UIColor.white
+            download.numberOfLines = 1
+            download.textColor = UIColor.white
+            if (message.messageType == KAppMessageType.Location) {
+                labelImage.image = UIImage(named: "location")
+            } else if (CSUtils.isMessageAVideo(message)) {
+                labelImage.image = UIImage(named: "video")
+            } else if (CSUtils.isMessageAAudio(message)) {
+                labelImage.image = UIImage(named: "audio")
+            } else if (message.messageType == KAppMessageType.Contact) {
+                labelImage.image = UIImage(named: "contact")
+            } else {
+                labelImage.image = UIImage(named: "file")
+            }
+            
             let dateCreated: String = message.created.toString(format: "H:mm")
             var messageStatus: String
             if (message.seenBy != nil && message.seenBy.count > 0) {
@@ -41,9 +79,6 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
             }
             
             timeLabel.textColor = kAppMessageFontColor
-            localImage.layer.cornerRadius = 8
-            localImage.layer.masksToBounds = true
-            localImage.sd_setImage(with: URL(string: message.message))
             if (isShouldShowAvatar) {
                 avatar.isHidden = false
                 if (message.user != nil && message.user.avatarURL != nil && message.user.avatarURL != "") {
@@ -56,24 +91,18 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
             }
             if (isShouldShowName) {
                 nameLabel.text = message.user?.name
+                nameConstraint.constant = 20.0
             } else {
                 nameLabel.text = ""
+                nameConstraint.constant = 0.0
             }
             if (isShouldShowDate) {
                 dateLabel.text = message.created.toString(format: "d MMMM yyyy ")
+                dateConstraint.constant = 20.0
             } else {
                 dateLabel.text = ""
+                dateConstraint.constant = 0.0
             }
-        }
-    }
-    
-    func manageLoadingIndicator(toShow: Bool) {
-        if (toShow) {
-            loadingIndicator.startAnimating()
-            loadingIndicator.isHidden = false
-        } else {
-            loadingIndicator.stopAnimating()
-            loadingIndicator.isHidden = true
         }
     }
 
@@ -86,6 +115,7 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
         // Configure the view for the selected state
     }
 
+
     override func handleLongPressGestures(_ sender: UILongPressGestureRecognizer) {
         if (sender.state == .began) {
             sender.view?.becomeFirstResponder()
@@ -93,17 +123,11 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
             let it1 = UIMenuItem(title: "Details", action: #selector(handleDetails(_:)))
             let it2 = UIMenuItem(title: "Delete", action: #selector(handleDelete(_:)))
             menuController.menuItems = [it1, it2]
-            menuController.setTargetRect(localImage.frame, in: localImage as UIView)
+            menuController.setTargetRect(labelImage.frame, in: labelImage)
             menuController.setMenuVisible(true, animated: true)
         }
     }
 
-    func handleDelete(_ sender: Any) {
-        if (delegate != nil && delegate?.onDeleteClicked != nil) {
-            delegate?.onDeleteClicked(message)
-        }
-    }
-    
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if (message.deleted != nil) {
             return false
@@ -115,5 +139,11 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
         }
 
         return false
+    }
+
+    func handleDelete(_ sender: Any) {
+        if (delegate != nil && delegate?.onDeleteClicked != nil) {
+            delegate?.onDeleteClicked(message)
+        }
     }
 }

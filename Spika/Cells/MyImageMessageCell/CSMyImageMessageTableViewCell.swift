@@ -1,15 +1,14 @@
 //
-//  CSMyStickerMessageCell.swift
-//  Spika
+//  MyImageMessageTableViewCell.h
+//  Prototype
 //
 //  Created by Dmitry Rybochkin on 25.02.17.
 //  Copyright (c) 2015 Clover Studio. All rights reserved.
 //
 
 import UIKit
-import SDWebImage
 
-class CSMyStickerMessageCell: CSBaseTableViewCell {
+class CSMyImageMessageTableViewCell: CSBaseTableViewCell {
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var localImage: UIImageView!
     @IBOutlet weak var parentView: UIView!
@@ -19,7 +18,7 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-
+    
     override var message: CSMessageModel! {
         didSet {
             backView.layer.cornerRadius = 8
@@ -43,11 +42,15 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
             timeLabel.textColor = kAppMessageFontColor
             localImage.layer.cornerRadius = 8
             localImage.layer.masksToBounds = true
-            localImage.sd_setImage(with: URL(string: message.message))
+            if (message.file.thumb != nil) {
+                localImage.sd_setImage(with: URL(string: CSUtils.generateDownloadURLFormFileId(message.file.thumb.id)))
+            } else if (message.file.file != nil) {
+                localImage.sd_setImage(with: URL(string: CSUtils.generateDownloadURLFormFileId(message.file.file.id)))
+            }
             if (isShouldShowAvatar) {
                 avatar.isHidden = false
                 if (message.user != nil && message.user.avatarURL != nil && message.user.avatarURL != "") {
-                    avatar.setImageWith(URL(string: (message.user.avatarURL)!)!)
+                    avatar.setImageWith(URL(string: message.user.avatarURL)!)
                 }
                 peak.isHidden = false
             } else {
@@ -66,7 +69,7 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
             }
         }
     }
-    
+
     func manageLoadingIndicator(toShow: Bool) {
         if (toShow) {
             loadingIndicator.startAnimating()
@@ -93,7 +96,7 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
             let it1 = UIMenuItem(title: "Details", action: #selector(handleDetails(_:)))
             let it2 = UIMenuItem(title: "Delete", action: #selector(handleDelete(_:)))
             menuController.menuItems = [it1, it2]
-            menuController.setTargetRect(localImage.frame, in: localImage as UIView)
+            menuController.setTargetRect(localImage.frame, in: localImage)
             menuController.setMenuVisible(true, animated: true)
         }
     }
@@ -113,7 +116,7 @@ class CSMyStickerMessageCell: CSBaseTableViewCell {
         } else if (action == #selector(handleDelete(_:))) {
             return true
         }
-
+        
         return false
     }
 }
