@@ -133,7 +133,6 @@
 		4E03A6C91E7AAA4500511DCB /* UIDevice+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Version.swift"; sourceTree = "<group>"; };
 		4E03A6CB1E7AAB8200511DCB /* Date+Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Formatter.swift"; sourceTree = "<group>"; };
 		4E03A6CF1E7BD67600511DCB /* UIAlertController+APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+APIError.swift"; sourceTree = "<group>"; };
-		4E5F0AAC1E655DF800107A34 /* Spika-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Spika-Bridging-Header.h"; sourceTree = "<group>"; };
 		4E5F0AAD1E655DF800107A34 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E5F0AAE1E655DF800107A34 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4E5F0AB11E6561C100107A34 /* JSONValueTransformer+CustomTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONValueTransformer+CustomTransformer.swift"; sourceTree = "<group>"; };
@@ -385,7 +384,6 @@
 				EAC6BE541C1704210038CCB6 /* Supporting Files */,
 				EAC6BE431C1703D80038CCB6 /* Assets.xcassets */,
 				EAC6BE441C1703D80038CCB6 /* Base.lproj */,
-				4E5F0AAC1E655DF800107A34 /* Spika-Bridging-Header.h */,
 			);
 			path = SpikaExample;
 			sourceTree = "<group>";
