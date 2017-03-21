@@ -45,8 +45,8 @@ class CSSocketController: NSObject {
         let block: RegisterBlock = {
             print("registerForChat block execute after connection")
             let array: [Any] = [parametersLogin]
-            self.socket.emit(KAppSocket.Login, args: array)
-            self.socket.on(KAppSocket.NewMessage, callback: { (_ args: SIOParameterArray?) -> Void in
+            self.socket.emit(KAppSocket.Login.rawValue, args: array)
+            self.socket.on(KAppSocket.NewMessage.rawValue, callback: { (_ args: SIOParameterArray?) -> Void in
                 let response: [AnyHashable: Any]! = args?.first as! [AnyHashable : Any]!
                 var message: CSMessageModel!
                 message = try? CSMessageModel(dictionary: response)
@@ -54,7 +54,7 @@ class CSSocketController: NSObject {
                     delegate.socketDidReceiveNewMessage(message)
                 }
             })
-            self.socket.on(KAppSocket.SendTyping, callback: { (_ args: SIOParameterArray?) -> Void in
+            self.socket.on(KAppSocket.SendTyping.rawValue, callback: { (_ args: SIOParameterArray?) -> Void in
                 let response: [AnyHashable: Any]! = args?.first as! [AnyHashable : Any]
                 var typing: CSTypingModel!
                 typing = try? CSTypingModel(dictionary: response)
@@ -62,7 +62,7 @@ class CSSocketController: NSObject {
                     delegate.socketDidReceiveTyping(typing)
                 }
             })
-            self.socket.on(KAppSocket.UserLeft, callback: { (_ args: SIOParameterArray?) -> Void in
+            self.socket.on(KAppSocket.UserLeft.rawValue, callback: { (_ args: SIOParameterArray?) -> Void in
                 let response: [AnyHashable: Any]! = args?.first as! [AnyHashable : Any]
                 var userLeft: CSUserModel!
                 userLeft = try? CSUserModel(dictionary: response)
@@ -70,7 +70,7 @@ class CSSocketController: NSObject {
                     delegate.socketDidReceiveUserLeft(userLeft)
                 }
             })
-            self.socket.on(KAppSocket.MessageUpdated, callback: { (_ args: SIOParameterArray?) -> Void in
+            self.socket.on(KAppSocket.MessageUpdated.rawValue, callback: { (_ args: SIOParameterArray?) -> Void in
                 let response: [AnyHashable: Any]! = args?.first as! [AnyHashable : Any]
                 let arrayResponses: [Any]! = Array(response.values)
                 var updatedMessages: [CSMessageModel]! = []
@@ -82,8 +82,8 @@ class CSSocketController: NSObject {
                     delegate.socketDidReceiveMessageUpdated(updatedMessages)
                 }
             })
-            self.socket.on(KAppSocket.Error, callback: { (_ args: SIOParameterArray?) -> Void in
-                var response: [AnyHashable: Any]? = args?.first as? [AnyHashable : Any]
+            self.socket.on(KAppSocket.Error.rawValue, callback: { (_ args: SIOParameterArray?) -> Void in
+                var response: [AnyHashable: Any]! = args?.first as? [AnyHashable : Any]
                 if (delegate != nil) {
                     if (delegate != nil) {
                         delegate.socketDidReceiveError(response?["code"] as! NSNumber)
@@ -99,11 +99,11 @@ class CSSocketController: NSObject {
     }
 
     func emit(_ event: KAppSocket) {
-        socket.emit(event)
+        socket.emit(event.rawValue)
     }
 
     func emit(_ event: KAppSocket, args: SIOParameterArray) {
-        socket.emit(event, args: args)
+        socket.emit(event.rawValue, args: args)
     }
 
     func close() {
@@ -114,7 +114,7 @@ class CSSocketController: NSObject {
 
    func connect() {
         isConnecting = true
-        SIOSocket.createSocket(host: CSCustomConfig.sharedInstance.socket_url, response: { (_ socket: SIOSocket?) -> Void in
+        SIOSocket.socketWithHost(host: CSCustomConfig.sharedInstance.socket_url, response: { (_ socket: SIOSocket?) -> Void in
             socket?.onConnect = {
                 self.isConnected = true
                 self.isConnecting = false

@@ -10,7 +10,6 @@
 		31CC1663B4E8B0C1E4B303A8 /* Pods_Spika.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D793BEC9E449E4D8672A410 /* Pods_Spika.framework */; };
 		4E5F0AAF1E655DF800107A34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5F0AAD1E655DF800107A34 /* AppDelegate.swift */; };
 		4E5F0AB01E655DF800107A34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5F0AAE1E655DF800107A34 /* ViewController.swift */; };
-		4E5F0AE71E657D3200107A34 /* SocketEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5F0AE51E657D3200107A34 /* SocketEventHandler.swift */; };
 		4E5F0AE81E657D3200107A34 /* SIOSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5F0AE61E657D3200107A34 /* SIOSocket.swift */; };
 		4E5F0B1A1E66057F00107A34 /* CSMyStickerMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5F0B191E66057F00107A34 /* CSMyStickerMessageCell.swift */; };
 		4EE751A31E81578200B1BC53 /* CSFileDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE751951E81578200B1BC53 /* CSFileDetailsModel.swift */; };
@@ -130,7 +129,6 @@
 		3D793BEC9E449E4D8672A410 /* Pods_Spika.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spika.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E5F0AAD1E655DF800107A34 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E5F0AAE1E655DF800107A34 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4E5F0AE51E657D3200107A34 /* SocketEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEventHandler.swift; sourceTree = "<group>"; };
 		4E5F0AE61E657D3200107A34 /* SIOSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIOSocket.swift; sourceTree = "<group>"; };
 		4E5F0B191E66057F00107A34 /* CSMyStickerMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSMyStickerMessageCell.swift; sourceTree = "<group>"; };
 		4EE751951E81578200B1BC53 /* CSFileDetailsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSFileDetailsModel.swift; sourceTree = "<group>"; };
@@ -273,7 +271,6 @@
 		4E2491921E3B6249003CB2C2 /* Sockets */ = {
 			isa = PBXGroup;
 			children = (
-				4E5F0AE51E657D3200107A34 /* SocketEventHandler.swift */,
 				4E5F0AE61E657D3200107A34 /* SIOSocket.swift */,
 			);
 			path = Sockets;
@@ -1001,7 +998,6 @@
 				4EE751A41E81578200B1BC53 /* CSFileModel.swift in Sources */,
 				4EE751ED1E81580800B1BC53 /* Date+Formatter.swift in Sources */,
 				4EE751A71E81578200B1BC53 /* CSLoginResult.swift in Sources */,
-				4E5F0AE71E657D3200107A34 /* SocketEventHandler.swift in Sources */,
 				4EE751E91E81580800B1BC53 /* CSEmitJsonCreator.swift in Sources */,
 				4EE751A51E81578200B1BC53 /* CSGetMessages.swift in Sources */,
 				4EE751E71E81580800B1BC53 /* CSCustomConfig.swift in Sources */,

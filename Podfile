@@ -7,8 +7,8 @@ target 'Spika' do
 
 pod 'AFNetworking', '~> 2.6'
 pod 'JSONModel', :git => 'https://github.com/jsonmodel/jsonmodel.git'
-#pod 'Socket.IO-Client-Swift'
-pod 'SocketRocket', :git => 'https://github.com/facebook/SocketRocket.git'
+pod 'Socket.IO-Client-Swift'
+#pod 'SocketRocket', :git => 'https://github.com/facebook/SocketRocket.git'
 pod 'SDWebImage', '~> 3.7'
 
 end
