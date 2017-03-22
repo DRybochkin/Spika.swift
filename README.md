@@ -37,5 +37,3 @@ CSCustomConfig.sharedInstance.server_url = serverTextField.text
         //presentViewController.(navigationController, animated: true, completion: nil)
         _ = navigationController?.pushViewController(viewController, animated: true)
 ```
-
-<iframe src="https://player.vimeo.com/video/153215431" width="500" height="375" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/153215431">spika ios demo</a> from <a href="https://vimeo.com/user48281194">Clover Studio</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
