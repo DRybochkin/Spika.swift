@@ -2,6 +2,8 @@
 Цель быстро перевести на swift и запустить чат.
 Будет два бранча с работой через SocketIO и через websocket использую SocketRocket
 
+В проекте два бранча master - использует SocketIO (https://github.com/socketio/socket.io-client-swift), SocketRocket - использует SocketRocket (https://github.com/facebook/SocketRocket)
+
 # Spika iOS module
 
 ## Example project compile instruction
